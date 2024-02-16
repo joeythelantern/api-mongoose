@@ -12,6 +12,7 @@ import { defineRoutes } from './modules/routes';
 import mongoose from 'mongoose';
 import BookController from './controllers/book';
 import { declareHandler } from './middleware/declareHandler';
+import { mongo } from './config/config';
 
 export const application = express();
 export let server: ReturnType<typeof http.createServer>;
@@ -27,10 +28,7 @@ export const Main = async () => {
     logging.log('Connect to Mongo');
     logging.log('----------------------------------------');
     try {
-        const connection = await mongoose.connect('mongodb+srv://superuser2:roseville@cluster0.wdxayfs.mongodb.net/test', {
-            retryWrites: true,
-            w: 'majority'
-        });
+        const connection = await mongoose.connect(mongo.MONGO_CONNECTION, mongo.MONGO_OPTIONS);
         logging.log('----------------------------------------');
         logging.log('Connected to Mongo: ', connection.version);
         logging.log('----------------------------------------');
