@@ -12,10 +12,10 @@ import { defineRoutes } from './modules/routes';
 import mongoose from 'mongoose';
 import BookController from './controllers/book';
 import { declareHandler } from './middleware/declareHandler';
-import { mongo } from './config/config';
+import { mongo, server } from './config/config';
 
 export const application = express();
-export let server: ReturnType<typeof http.createServer>;
+export let httpServer: ReturnType<typeof http.createServer>;
 
 export const Main = async () => {
     logging.log('----------------------------------------');
@@ -59,14 +59,14 @@ export const Main = async () => {
     logging.log('----------------------------------------');
     logging.log('Starting Server');
     logging.log('----------------------------------------');
-    server = http.createServer(application);
-    server.listen(1337, () => {
+    httpServer = http.createServer(application);
+    httpServer.listen(server.SERVER_PORT, () => {
         logging.log('----------------------------------------');
-        logging.log(`Server started on ${JSON.stringify(server.address())}`);
+        logging.log(`Server started on ${server.SERVER_HOSTNAME}:${server.SERVER_PORT}`);
         logging.log('----------------------------------------');
     });
 };
 
-export const Shutdown = (callback: any) => server && server.close(callback);
+export const Shutdown = (callback: any) => httpServer && httpServer.close(callback);
 
 Main();
