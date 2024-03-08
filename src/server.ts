@@ -1,18 +1,19 @@
 import http from 'http';
 import express from 'express';
+import mongoose from 'mongoose';
 import './config/logging';
 import 'reflect-metadata';
 
 import { corsHandler } from './middleware/corsHandler';
 import { loggingHandler } from './middleware/loggingHandler';
 import { routeNotFound } from './middleware/routeNotFound';
-
-import MainController from './controllers/main';
-import { defineRoutes } from './modules/routes';
-import mongoose from 'mongoose';
-import BookController from './controllers/book';
 import { declareHandler } from './middleware/declareHandler';
 import { mongo, server } from './config/config';
+
+import { defineRoutes } from './modules/routes';
+
+import MainController from './controllers/main';
+import BookController from './controllers/book';
 
 export const application = express();
 export let httpServer: ReturnType<typeof http.createServer>;
